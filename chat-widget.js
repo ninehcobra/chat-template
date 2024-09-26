@@ -186,7 +186,9 @@
   </head>
   <body>
     <div style="width: 350px; height: 520px">
-      <div class="h-100 chat-container">
+      <div class="h-100 chat-container" style="
+    background-color: white;
+">
         <!-- Main Chat Area -->
         <div class="main-chat h-100">
           <div
