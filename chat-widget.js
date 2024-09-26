@@ -11,6 +11,8 @@
         z-index: 9999;
         width: 350px;
         height: 520px;
+        bottom:80px;
+        right: 20px;
 
       }
       #chat-widget-toggle {
@@ -18,7 +20,8 @@
         z-index: 10000;
         width: 45px;
         height: 45px;
-  
+   bottom:20px;
+        right: 20px;
       }
     `;
     document.head.appendChild(style);
@@ -292,6 +295,9 @@
         ? '<i class="fa-solid fa-xmark"></i>'
         : '<i class="fa-solid fa-comment"></i>';
     });
+
+    setPosition("bottom-right");
+    setColor("blue");
   }
 
   // Gọi hàm initChatWidget khi DOM đã sẵn sàng
@@ -303,8 +309,6 @@
 
   // Hàm để đặt vị trí widget
   function setPosition(position) {
-    if(position===")
-       position="bottom-right"
     const [vertical, horizontal] = position.split("-");
 
     container.style[vertical] = "80px";
