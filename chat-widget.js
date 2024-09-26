@@ -303,7 +303,8 @@
 
   // Hàm để đặt vị trí widget
   function setPosition(position) {
-    console.log(position);
+    if(position===")
+       position="bottom-right"
     const [vertical, horizontal] = position.split("-");
 
     container.style[vertical] = "80px";
