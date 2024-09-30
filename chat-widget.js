@@ -131,6 +131,35 @@
         font-size:${chatWidgetConfigFinal.chatWindow.fontSize}px;
       }
 
+      @media screen and (max-width: 768px) {
+        #chat-widget-container {
+          width: 100% !important;
+          height: 100% !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          border-radius: 0 !important;
+        }
+
+        #chat-widget-toggle.open{
+        top:10px !important;
+        right:20px !important;
+        }
+
+        .ai-chat-container {
+          width: 100% !important;
+          height: 100% !important;
+          border-radius: 0 !important;
+        }
+
+        .ai-chat-header {
+          border-radius: 0 !important;
+        }
+
+        .ai-chat-input {
+          border-radius: 0 !important;
+        }
+      }
+
       #chat-widget-container {
       transition: transform 0.3s ease-out, opacity 0.3s ease-out;
       transform: translate(20px, 20px);
