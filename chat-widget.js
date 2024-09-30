@@ -1,124 +1,125 @@
 (function () {
-  let container;
-  let toggleBtn;
+    let container;
+    let toggleBtn;
 
-  // CONFIGURATION
-  // Configuration call form api
-  const chatWidgetConfigFromApi = {
-    button: {
-      backgroundColor: "#3B81F6",
-      right: 20,
-      bottom: 20,
-      size: "medium",
-      iconColor: "white",
-      customIconSrc:
-        "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
-    },
-    chatWindow: {
-      welcomeMessage: "Hello! This is custom welcome message",
-      backgroundColor: "#ffffff",
-      height: 700,
-      width: 400,
-      fontSize: 16,
-      poweredByTextColor: "#303235",
-      botMessage: {
-        backgroundColor: "#f7f8ff",
-        textColor: "#303235",
-        showAvatar: true,
-        avatarSrc:
-          "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/parroticon.png",
-      },
-      userMessage: {
-        backgroundColor: "#3B81F6",
-        textColor: "#ffffff",
-        showAvatar: true,
-        avatarSrc:
-          "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png",
-      },
-      textInput: {
-        placeholder: "Type your question",
-        backgroundColor: "#ffffff",
-        textColor: "#303235",
-        sendButtonColor: "#3B81F6",
-      },
-    },
-  };
+    // CONFIGURATION
+    // Configuration call form api
+    const chatWidgetConfigFromApi = {
+        button: {
+            backgroundColor: "#3B81F6",
+            right: 20,
+            bottom: 20,
+            size: "medium",
+            iconColor: "white",
+            customIconSrc:
+                "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
+        },
+        chatWindow: {
+            welcomeMessage: "Hello! This is custom welcome message",
+            backgroundColor: "#ffffff",
+            height: 700,
+            width: 400,
+            fontSize: 16,
+            poweredByTextColor: "#303235",
+            botMessage: {
+                backgroundColor: "#f7f8ff",
+                textColor: "#303235",
+                showAvatar: true,
+                avatarSrc:
+                    "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/parroticon.png",
+            },
+            userMessage: {
+                backgroundColor: "#3B81F6",
+                textColor: "#ffffff",
+                showAvatar: true,
+                avatarSrc:
+                    "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png",
+            },
+            textInput: {
+                placeholder: "Type your question",
+                backgroundColor: "#ffffff",
+                textColor: "#303235",
+                sendButtonColor: "#3B81F6",
+            },
+        },
+    };
 
-  // Configuration defaults
-  const chatWidgetConfigDefault = {
-    button: {
-      backgroundColor: "#3B81F6",
-      right: 20,
-      bottom: 20,
-      size: "medium",
-      iconColor: "white",
-      customIconSrc:
-        "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
-    },
-    chatWindow: {
-      welcomeMessage: "Hello! This is custom welcome message",
-      backgroundColor: "#ffffff",
-      height: 700,
-      width: 400,
-      fontSize: 16,
-      poweredByTextColor: "#303235",
-      botMessage: {
-        backgroundColor: "#f7f8ff",
-        textColor: "#303235",
-        showAvatar: true,
-        avatarSrc:
-          "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/parroticon.png",
-      },
-      userMessage: {
-        backgroundColor: "#3B81F6",
-        textColor: "#ffffff",
-        showAvatar: true,
-        avatarSrc:
-          "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png",
-      },
-      textInput: {
-        placeholder: "Type your question",
-        backgroundColor: "#ffffff",
-        textColor: "#303235",
-        sendButtonColor: "#3B81F6",
-      },
-    },
-  };
+    // Configuration defaults
+    const chatWidgetConfigDefault = {
+        button: {
+            backgroundColor: "#3B81F6",
+            right: 20,
+            bottom: 20,
+            size: "medium",
+            iconColor: "white",
+            customIconSrc:
+                "https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/svg/google-messages.svg",
+        },
+        chatWindow: {
+            welcomeMessage: "Hello! This is custom welcome message",
+            backgroundColor: "#ffffff",
+            height: 700,
+            width: 400,
+            fontSize: 16,
+            poweredByTextColor: "#303235",
+            botMessage: {
+                backgroundColor: "#f7f8ff",
+                textColor: "#303235",
+                showAvatar: true,
+                avatarSrc:
+                    "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/parroticon.png",
+            },
+            userMessage: {
+                backgroundColor: "#3B81F6",
+                textColor: "#ffffff",
+                showAvatar: true,
+                avatarSrc:
+                    "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png",
+            },
+            textInput: {
+                placeholder: "Type your question",
+                backgroundColor: "#ffffff",
+                textColor: "#303235",
+                sendButtonColor: "#3B81F6",
+            },
+        },
+    };
 
-  // Tổng hợp các config
+    // Summary of configs
 
-  const chatWidgetConfigFinal = {};
+    const chatWidgetConfigFinal = {};
 
-  // Hàm tổng hợp config
-  function mergeConfigs(target, source, fallback) {
-    for (const key in fallback) {
-      if (fallback.hasOwnProperty(key)) {
-        if (
-          typeof fallback[key] === "object" &&
-          !Array.isArray(fallback[key])
-        ) {
-          target[key] = source[key] || {};
-          mergeConfigs(target[key], source[key] || {}, fallback[key]);
-        } else {
-          target[key] = source[key] !== undefined ? source[key] : fallback[key];
+    // Function to summarize configs
+    function mergeConfigs(target, source, fallback) {
+        for (const key in fallback) {
+            if (fallback.hasOwnProperty(key)) {
+                if (
+                    typeof fallback[key] === "object" &&
+                    !Array.isArray(fallback[key])
+                ) {
+                    target[key] = source[key] || {};
+                    mergeConfigs(target[key], source[key] || {}, fallback[key]);
+                } else {
+                    target[key] =
+                        source[key] !== undefined ? source[key] : fallback[key];
+                }
+            }
         }
-      }
     }
-  }
 
-  // Merge config
-  mergeConfigs(
-    chatWidgetConfigFinal,
-    chatWidgetConfigFromApi,
-    chatWidgetConfigDefault
-  );
+    // Merge config
+    mergeConfigs(
+        chatWidgetConfigFinal,
+        chatWidgetConfigFromApi,
+        chatWidgetConfigDefault
+    );
 
-  console.log(chatWidgetConfigFinal);
+    console.log(chatWidgetConfigFinal);
 
-  function initChatWidget() {
-    // Tạo style cho widget
-    const style = document.createElement("style");
-    style.textContent = `
+    function initChatWidget() {
+        // Create style for chat widget
+        const style = document.createElement("style");
+        style.textContent = `
       #chat-widget-container {
         position: fixed;
         z-index: 9999;
@@ -126,7 +127,7 @@
         height: ${chatWidgetConfigFinal.chatWindow.height}px;
         right:20px;
         bottom: ${
-          chatWidgetConfigFinal.button.size == "medium" ? "80px" : "96px"
+            chatWidgetConfigFinal.button.size == "medium" ? "80px" : "96px"
         };
         font-size:${chatWidgetConfigFinal.chatWindow.fontSize}px;
       }
@@ -175,10 +176,10 @@
         position: fixed;
         z-index: 10000;
         width:${
-          chatWidgetConfigFinal.button.size == "medium" ? "48px" : "64px"
+            chatWidgetConfigFinal.button.size == "medium" ? "48px" : "64px"
         };
         height: ${
-          chatWidgetConfigFinal.button.size == "medium" ? "48px" : "64px"
+            chatWidgetConfigFinal.button.size == "medium" ? "48px" : "64px"
         };
         border-radius:100%;
         background-color: ${chatWidgetConfigFinal.button.backgroundColor};
@@ -268,6 +269,8 @@
         border: 1px solid #dee2e6;
         border-radius: 0.25rem;
         padding: 0.5rem 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        list-style: none;
       }
 
       .ai-chat-dropdown-item {
@@ -275,6 +278,10 @@
         padding: 0.25rem 1rem;
         text-decoration: none;
         color: #212529;
+      }
+
+      .ai-chat-dropdown-item:hover {
+        background-color: #f8f9fa;
       }
 
       .ai-chat-messages {
@@ -310,18 +317,19 @@
         padding: 0.5rem;
         border-radius: 0.25rem;
         max-width: 80%;
+         word-break: break-word;
       }
 
       .ai-chat-message-incoming .ai-chat-message-content {
          background-color:${
-           chatWidgetConfigFinal.chatWindow.botMessage.backgroundColor
+             chatWidgetConfigFinal.chatWindow.botMessage.backgroundColor
          };
         color:${chatWidgetConfigFinal.chatWindow.botMessage.textColor};
       }
 
       .ai-chat-message-outgoing .ai-chat-message-content {
        background-color:${
-         chatWidgetConfigFinal.chatWindow.userMessage.backgroundColor
+           chatWidgetConfigFinal.chatWindow.userMessage.backgroundColor
        };
         color:${chatWidgetConfigFinal.chatWindow.userMessage.textColor};
       }
@@ -362,7 +370,7 @@
         border-radius: 0.25rem 0 0 0.25rem;
         font-size:${chatWidgetConfigFinal.chatWindow.fontSize}px;
         background-color:${
-          chatWidgetConfigFinal.chatWindow.textInput.backgroundColor
+            chatWidgetConfigFinal.chatWindow.textInput.backgroundColor
         };
         color:${chatWidgetConfigFinal.chatWindow.textInput.textColor};
       }
@@ -405,33 +413,33 @@
       }
 
     `;
-    document.head.appendChild(style);
+        document.head.appendChild(style);
 
-    // Tạo container cho widget
-    container = document.createElement("div");
-    container.id = "chat-widget-container";
-    container.style.display = "none";
+        // Create the container element
+        container = document.createElement("div");
+        container.id = "chat-widget-container";
+        container.style.display = "none";
 
-    // Tạo icon cho toggle button
-    let toggleBtnIconOpen = chatWidgetConfigFinal.button.customIconSrc
-      ? `<img src=${chatWidgetConfigFinal.button.customIconSrc} class="ai-chat-toggle-icon-wrapper" alt="icon"/>`
-      : '<svg class="ai-chat-toggle-icon-wrapper" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path class="ai-chat-toggle-icon" d="M12 2C6.486 2 2 6.486 2 12v4.143C2 17.167 2.897 18 4 18h1a1 1 0 0 0 1-1v-5.143a1 1 0 0 0-1-1h-.908C4.648 6.987 7.978 4 12 4s7.352 2.987 7.908 6.857H19a1 1 0 0 0-1 1V18c0 1.103-.897 2-2 2h-2v-1h-4v3h6c2.206 0 4-1.794 4-4 1.103 0 2-.833 2-1.857V12c0-5.514-4.486-10-10-10z"/></svg>';
+        // Create Icon for toggle button
+        let toggleBtnIconOpen = chatWidgetConfigFinal.button.customIconSrc
+            ? `<img src=${chatWidgetConfigFinal.button.customIconSrc} class="ai-chat-toggle-icon-wrapper" alt="icon"/>`
+            : '<svg class="ai-chat-toggle-icon-wrapper" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path class="ai-chat-toggle-icon" d="M12 2C6.486 2 2 6.486 2 12v4.143C2 17.167 2.897 18 4 18h1a1 1 0 0 0 1-1v-5.143a1 1 0 0 0-1-1h-.908C4.648 6.987 7.978 4 12 4s7.352 2.987 7.908 6.857H19a1 1 0 0 0-1 1V18c0 1.103-.897 2-2 2h-2v-1h-4v3h6c2.206 0 4-1.794 4-4 1.103 0 2-.833 2-1.857V12c0-5.514-4.486-10-10-10z"/></svg>';
 
-    let toggleBtnIconClose =
-      '<svg class="ai-chat-toggle-icon-wrapper" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path class="ai-chat-toggle-icon" fill-rule="evenodd" clip-rule="evenodd" d="M19.207 6.207a1 1 0 0 0-1.414-1.414L12 10.586 6.207 4.793a1 1 0 0 0-1.414 1.414L10.586 12l-5.793 5.793a1 1 0 1 0 1.414 1.414L12 13.414l5.793 5.793a1 1 0 0 0 1.414-1.414L13.414 12l5.793-5.793z" fill="#000000"/></svg>';
+        let toggleBtnIconClose =
+            '<svg class="ai-chat-toggle-icon-wrapper" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path class="ai-chat-toggle-icon" fill-rule="evenodd" clip-rule="evenodd" d="M19.207 6.207a1 1 0 0 0-1.414-1.414L12 10.586 6.207 4.793a1 1 0 0 0-1.414 1.414L10.586 12l-5.793 5.793a1 1 0 1 0 1.414 1.414L12 13.414l5.793 5.793a1 1 0 0 0 1.414-1.414L13.414 12l5.793-5.793z" fill="#000000"/></svg>';
 
-    // Tạo nút toggle
-    toggleBtn = document.createElement("div");
-    toggleBtn.id = "chat-widget-toggle";
-    toggleBtn.className = "ai-chat-toggle";
-    toggleBtn.innerHTML = toggleBtnIconOpen;
+        // Create the toggle button
+        toggleBtn = document.createElement("div");
+        toggleBtn.id = "chat-widget-toggle";
+        toggleBtn.className = "ai-chat-toggle";
+        toggleBtn.innerHTML = toggleBtnIconOpen;
 
-    const currentTime = new Date().toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    // Thêm nội dung chat từ template
-    container.innerHTML = `
+        const currentTime = new Date().toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+        // Add content to the container
+        container.innerHTML = `
     <!DOCTYPE html>
       <html lang="en">
         <body>
@@ -440,24 +448,24 @@
               <div class="ai-chat-header">
                 <div class="ai-chat-header-user">
                 ${
-                  chatWidgetConfigFinal.chatWindow.botMessage.showAvatar
-                    ? `<img
+                    chatWidgetConfigFinal.chatWindow.botMessage.showAvatar
+                        ? `<img
                         src="${chatWidgetConfigFinal.chatWindow.botMessage.avatarSrc}"
                         class="ai-chat-header-avatar"
                         alt="Contact"
                       >`
-                    : ""
+                        : ""
                 }
                   <h5 class="ai-chat-header-name">CaoNiMa</h5>
                 </div>
                 <div class="ai-chat-dropdown">
-                  <i class="fa-solid fa-ellipsis"></i>
+                <svg fill="#000000" width="20px" height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12,10a2,2,0,1,1-2,2A2,2,0,0,1,12,10ZM4,14a2,2,0,1,0-2-2A2,2,0,0,0,4,14Zm16-4a2,2,0,1,0,2,2A2,2,0,0,0,20,10Z"/></svg>
                   <ul class="ai-chat-dropdown-menu">
                     <li>
-                      <a class="ai-chat-dropdown-item" href="#">Contact info</a>
+                      <a class="ai-chat-dropdown-item" href="#">Contact</a>
                     </li>
-                    <li><a class="ai-chat-dropdown-item" href="#">Mute</a></li>
-                    <li><a class="ai-chat-dropdown-item" href="#">Delete chat</a></li>
+                    <li><a class="ai-chat-dropdown-item" href="#">Refresh</a></li>
+                    <li><a class="ai-chat-dropdown-item" href="#">Delete</a></li>
                   </ul>
                 </div>
               </div>
@@ -465,17 +473,17 @@
               <div class="ai-chat-messages " id="chatBox">
                            <div class="ai-chat-message  ai-chat-message-incoming" >
               ${
-                chatWidgetConfigFinal.chatWindow.welcomeMessage
-                  ? `
+                  chatWidgetConfigFinal.chatWindow.welcomeMessage
+                      ? `
               
                   ${
-                    chatWidgetConfigFinal.chatWindow.botMessage.showAvatar
-                      ? `<img
+                      chatWidgetConfigFinal.chatWindow.botMessage.showAvatar
+                          ? `<img
                   src="${chatWidgetConfigFinal.chatWindow.botMessage.avatarSrc}"
                   class="ai-chat-bot-avatar"
                   alt="Contact"
                 >`
-                      : ""
+                          : ""
                   }
                   <div class="ai-chat-message-content">
                     <p class="ai-chat-message-text">
@@ -485,7 +493,7 @@
               
                 </div>
               `
-                  : ""
+                      : ""
               }
               </div>
 
@@ -499,7 +507,7 @@
                     type="text"
                     class="ai-chat-input-field"
                     placeholder=${
-                      chatWidgetConfigFinal.chatWindow.textInput.placeholder
+                        chatWidgetConfigFinal.chatWindow.textInput.placeholder
                     }
                   />
                   <button class="ai-chat-input-button" type="submit">            
@@ -520,63 +528,75 @@
 
     `;
 
-    // Thêm các phần tử vào body
-    document.body.appendChild(container);
-    document.body.appendChild(toggleBtn);
+        // Add elements to the body
+        document.body.appendChild(container);
+        document.body.appendChild(toggleBtn);
 
-    // Xử lý việc hiển thị/ẩn widget
-    let isVisible = false;
-    toggleBtn.addEventListener("click", () => {
-      isVisible = !isVisible;
-      container.style.display = "block";
-      setTimeout(() => {
-        container.classList.toggle("visible", isVisible);
-      }, 10);
-      toggleBtn.classList.toggle("open", isVisible);
-      toggleBtn.innerHTML = !isVisible ? toggleBtnIconOpen : toggleBtnIconClose;
+        // Handle toggle button click event
+        let isVisible = false;
+        toggleBtn.addEventListener("click", () => {
+            isVisible = !isVisible;
+            container.style.display = "block";
+            setTimeout(() => {
+                container.classList.toggle("visible", isVisible);
+            }, 10);
+            toggleBtn.classList.toggle("open", isVisible);
+            toggleBtn.innerHTML = !isVisible
+                ? toggleBtnIconOpen
+                : toggleBtnIconClose;
 
-      if (!isVisible) {
-        setTimeout(() => {
-          container.style.display = "none";
-        }, 300);
-      }
-    });
+            if (!isVisible) {
+                setTimeout(() => {
+                    container.style.display = "none";
+                }, 300);
+            }
+        });
 
-    // logic thêm tin nhắn
-    document
-      .getElementById("chatForm")
-      .addEventListener("submit", function (event) {
-        event.preventDefault(); // Ngăn không cho form reload trang
+        // Handle click event on the dropdown
+        const dropdown = document.querySelector(".ai-chat-dropdown");
+        const dropdownMenu = document.querySelector(".ai-chat-dropdown-menu");
 
-        const chatInput = document.getElementById("chatInput");
-        const message = chatInput.value.trim();
+        dropdown.addEventListener("click", () => {
+            dropdownMenu.style.display =
+                dropdownMenu.style.display === "block" ? "none" : "block";
+        });
 
-        if (message !== "") {
-          // Thêm tin nhắn của người dùng vào chat box
-          addMessageToChat(message, "user-message");
+        // Handle send button click event
+        document
+            .getElementById("chatForm")
+            .addEventListener("submit", async function (event) {
+                event.preventDefault(); // Ngăn không cho form reload trang
 
-          // Xóa input sau khi gửi
-          chatInput.value = "";
+                const chatInput = document.getElementById("chatInput");
+                const message = chatInput.value.trim();
 
-          // Giả sử hệ thống tự động trả lời (có thể thay bằng API AI chatbot)
-          setTimeout(function () {
-            addMessageToChat("This is an automated response", "bot-message");
-          }, 500);
-        }
-      });
+                if (message !== "") {
+                    // Thêm tin nhắn của người dùng vào chat box
+                    addMessageToChat(message, "user-message");
 
-    function addMessageToChat(message, className) {
-      const chatBox = document.getElementById("chatBox");
+                    // Xóa input sau khi gửi
+                    chatInput.value = "";
 
-      const currentTime = new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
+                    // Giả sử hệ thống tự động trả lời (có thể thay bằng API AI chatbot)
+                    setTimeout(async function () {
+                        const apiResponse = await callPredictionAPI(message);
+                        addMessageToChat(apiResponse, "bot-message");
+                    }, 100);
+                }
+            });
 
-      let messageHtml;
+        function addMessageToChat(message, className) {
+            const chatBox = document.getElementById("chatBox");
 
-      if (className === "user-message") {
-        messageHtml = `        
+            const currentTime = new Date().toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+            });
+
+            let messageHtml;
+
+            if (className === "user-message") {
+                messageHtml = `        
                         <div class="ai-chat-message ai-chat-message-outgoing">
                           <div class="ai-chat-message-content">
                             <p class="ai-chat-message-text">
@@ -585,46 +605,80 @@
                             <small class="ai-chat-message-time">${currentTime}</small>
                           </div>
                            ${
-                             chatWidgetConfigFinal.chatWindow.userMessage
-                               .showAvatar
-                               ? `<img
+                               chatWidgetConfigFinal.chatWindow.userMessage
+                                   .showAvatar
+                                   ? `<img
                                     src="${chatWidgetConfigFinal.chatWindow.userMessage.avatarSrc}"
                                     class="ai-chat-user-avatar"
                                     alt="Contact"
                                   >`
-                               : ""
+                                   : ""
                            }
                         </div>
                   `;
-      } else {
-        messageHtml = `
+            } else {
+                messageHtml = `
                         <div class="ai-chat-message ai-chat-message-incoming">
                         ${
-                          chatWidgetConfigFinal.chatWindow.botMessage.showAvatar
-                            ? `<img
+                            chatWidgetConfigFinal.chatWindow.botMessage
+                                .showAvatar
+                                ? `<img
                               src="${chatWidgetConfigFinal.chatWindow.botMessage.avatarSrc}"
                               class="ai-chat-bot-avatar"
                               alt="Contact"
                             >`
-                            : ""
+                                : ""
                         }
                           <div class="ai-chat-message-content">
                             <p class="ai-chat-message-text">${message}</p>
                             <small class="ai-chat-message-time">${currentTime}</small>
                           </div>
                         </div>`;
-      }
+            }
 
-      chatBox.innerHTML += messageHtml;
+            chatBox.innerHTML += messageHtml;
 
-      chatBox.scrollTop = chatBox.scrollHeight;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
     }
-  }
 
-  // Gọi hàm initChatWidget khi DOM đã sẵn sàng
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initChatWidget);
-  } else {
-    initChatWidget();
-  }
+    // Function to call the API with the user question
+    async function callPredictionAPI(question) {
+        const requestBody = {
+            question: question,
+            overrideConfig: {
+                returnSourceDocuments: "",
+                rephrasePrompt: "",
+                responsePrompt: "",
+                openAIApiKey: "api-key",
+            },
+        };
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(requestBody),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data?.answer; // return the API response
+        } catch (error) {
+            console.error("Error calling the API:", error);
+            return null; // return null in case of error
+        }
+    }
+
+    // Call the initChatWidget function when the DOM is ready
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initChatWidget);
+    } else {
+        initChatWidget();
+    }
 })();
